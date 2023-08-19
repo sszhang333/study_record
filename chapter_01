@@ -210,3 +210,246 @@
      "metadata": {},
      "output_type": "execute_result"
     }
+ ],
+   "source": [
+    "x.sum() #对元素进行求和"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "6bd8b5bb",
+   "metadata": {},
+   "source": [
+    "**tensor的广播机制**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "19922b58",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(tensor([[0],\n",
+       "         [1],\n",
+       "         [2]]),\n",
+       " tensor([[0, 1, 2]]))"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "a=torch.arange(3).reshape(3,1)\n",
+    "b=torch.arange(3).reshape((1,3))\n",
+    "a,b"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "bd493e26",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "tensor([[0, 1, 2],\n",
+       "        [1, 2, 3],\n",
+       "        [2, 3, 4]])"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "a+b"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "c0cd3728",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(tensor([0, 1, 2]), tensor([0]))"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "a[:,0],a[0,:]# 区分行与列"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "864b050a",
+   "metadata": {},
+   "source": [
+    "执行原地操作, 不占用新的内存"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "188a6056",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "y=torch.arange(12).reshape((3,4))\n",
+    "z=torch.zeros_like(y)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "211e57df",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "False"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "before=id(z)\n",
+    "z=z+y\n",
+    "id(z)==before"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "0ad29ce6",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 18,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "before=id(z)\n",
+    "z[:]=z+y #这种方法可以不占新的内存\n",
+    "id(z)==before"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "034c649c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 19,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "z+=y\n",
+    "id(z)==before"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "38517017",
+   "metadata": {},
+   "source": [
+    "**Numpy和Torch的相互转换**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "117d9ff2",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(array([[ 0,  3,  6,  9],\n",
+       "        [12, 15, 18, 21],\n",
+       "        [24, 27, 30, 33]], dtype=int64),\n",
+       " numpy.ndarray,\n",
+       " tensor([[ 0,  3,  6,  9],\n",
+       "         [12, 15, 18, 21],\n",
+       "         [24, 27, 30, 33]]),\n",
+       " torch.Tensor)"
+      ]
+     },
+     "execution_count": 20,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "A=z.numpy()\n",
+    "B=torch.tensor(A)\n",
+    "A,type(A),B, type(B)"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "0969aab4",
+   "metadata": {},
+   "source": [
+    "****"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "a9744a69",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(torch.Tensor, 3.5, float, 3.5, 3)"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "a=torch.tensor([3.5])\n",
+    "type(a),a.item(), type(a.item()), float(a), int(a)"
+   ]
+  }
+
