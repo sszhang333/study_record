@@ -452,4 +452,120 @@
     "type(a),a.item(), type(a.item()), float(a), int(a)"
    ]
   }
-
+{
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "34b8cb93",
+   "metadata": {},
+   "source": [
+    "**数据预处理**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "2c9110b8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os\n",
+    "\n",
+    "os.makedirs(os.path.join('..','李沐_动手学深度学习','data'),exist_ok=True)#.. 表示在桌面创建\n",
+    "data_file=os.path.join('..','李沐_动手学深度学习', 'data', 'house_tiny.csv')\n",
+    "with open(data_file, 'w') as f:\n",
+    "    f.write('NumRooms, Alley, Price\\n')\n",
+    "    f.write('NA, Pave, 127\\n')\n",
+    "    f.write('2,NA,100\\n')\n",
+    "    f.write('4,NA,178\\n')\n",
+    "    f.write('NA,NA,140\\n')\n"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "5a639ad8",
+   "metadata": {},
+   "source": [
+    "**从创建的CSV文件中加载数据**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "f6417f00",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>NumRooms</th>\n",
+       "      <th>Alley</th>\n",
+       "      <th>Price</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Pave</td>\n",
+       "      <td>127</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2.0</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>100</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>4.0</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>178</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>140</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   NumRooms  Alley   Price\n",
+       "0       NaN   Pave     127\n",
+       "1       2.0    NaN     100\n",
+       "2       4.0    NaN     178\n",
+       "3       NaN    NaN     140"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "data=pd.read_csv(data_file)\n",
+    "data"
+   ]
+  }
